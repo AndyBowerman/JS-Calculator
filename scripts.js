@@ -163,7 +163,6 @@ const pushDecimal = () => {
     }    
 }
 
-
 zero.addEventListener('click', pushZero);
 one.addEventListener('click', pushOne);
 two.addEventListener('click', pushTwo);
@@ -175,3 +174,15 @@ seven.addEventListener('click', pushSeven);
 eight.addEventListener('click', pushEight);
 nine.addEventListener('click', pushNine);
 decimal.addEventListener('click', pushDecimal);
+
+// Clear Function
+
+const clearAll = () => {
+    displayNumber = 0;
+    hiddenNumber = 0;
+    numberEntryArray = [];
+    display.innerText = displayNumber;
+}
+
+clear.addEventListener('click', clearAll);
+
