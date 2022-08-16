@@ -1,7 +1,7 @@
-@import "./variables.scss";
-@import "./buttons.scss";
-@import "./display.scss";
-@import "./grid-areas.scss";
+@import "./modules/variables";
+@import "./modules/buttons.scss";
+@import "./modules/display.scss";
+@import "./modules/grid-areas.scss";
 
 * {
     margin: 0;
@@ -16,14 +16,14 @@
     justify-content: center;
     align-items: center;
     font-family: $font-main;
-}
 
-.calculator__container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 3fr 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 10px;
-    padding: 20px;
-    background-color: $color-black;
-    border-radius: $calculator-border-radius;
+    &__container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 2.5fr 1fr 1fr 1fr 1fr 1fr;
+        grid-gap: 10px;
+        padding: 15px;
+        background-color: $color-black;
+        border-radius: $calculator-border-radius;
+    }
 }

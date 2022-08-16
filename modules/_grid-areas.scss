@@ -1,0 +1,91 @@
+//Display
+
+.calculator__display {
+    grid-area: 1 / 1 / 2 / 5;
+}
+
+//Top row
+
+#calculator__clear {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+#calculator__negative {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+#calculator__percentage {
+    grid-area: 2 / 3 / 3 / 4;
+}
+
+#calculator__divide {
+    grid-area: 2 / 4 / 3 / 5;
+}
+
+//Second row
+
+#calculator__7 {
+    grid-area: 3 / 1 / 4 / 2;
+}
+
+#calculator__8 {
+    grid-area: 3 / 2 / 4 / 3;
+}
+
+#calculator__9 {
+    grid-area: 3 / 3 / 4 / 4;
+}
+
+#calculator__multiply {
+    grid-area: 3 / 4 / 4 / 5;
+}
+
+//Third row
+
+#calculator__4 {
+    grid-area: 4 / 1 / 5 / 2;
+}
+
+#calculator__5 {
+    grid-area: 4 / 2 / 5 / 3;
+}
+
+#calculator__6 {
+    grid-area: 4 / 3 / 5 / 4;
+}
+
+#calculator__minus {
+    grid-area: 4 / 4 / 5 / 5;
+}
+
+//Forth row
+
+#calculator__1 {
+    grid-area: 5 / 1 / 6 / 2;
+}
+
+#calculator__2 {
+    grid-area: 5 / 2 / 6 / 3;
+}
+
+#calculator__3 {
+    grid-area: 5 / 3 / 6 / 4;
+}
+
+#calculator__plus {
+    grid-area: 5 / 4 / 6 / 5;
+}
+
+//Bottom row
+
+#calculator__0 {
+    grid-area: 6 / 1 / 7 / 3;
+}
+
+#calculator__decimal {
+    grid-area: 6 / 3 / 7 / 4;
+}
+
+#calculator__equals {
+    grid-area: 6 / 4 / 7 / 5;
+}
