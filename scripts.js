@@ -19,6 +19,7 @@ limit length of the number that can be entered
 let displayNumber = 0;
 let hiddenNumber = 0;
 let numberEntryArray = [];
+let calculationOption = 0;
 
 const display = document.querySelector(".calculator__display--p");
 const clear = document.getElementById("calculator__clear");
@@ -175,6 +176,19 @@ eight.addEventListener('click', pushEight);
 nine.addEventListener('click', pushNine);
 decimal.addEventListener('click', pushDecimal);
 
+//Change button colour back to original styling. + - / * change colour when selected.
+
+const buttonReset = () => {
+    divide.style.backgroundColor = 'orange';
+    divide.style.color = 'white';
+    multiply.style.backgroundColor = 'orange';
+    multiply.style.color = 'white';
+    minus.style.backgroundColor = 'orange';
+    minus.style.color = 'white';
+    plus.style.backgroundColor = 'orange';
+    plus.style.color = 'white';
+}
+
 // Clear Function
 
 const clearAll = () => {
@@ -182,7 +196,83 @@ const clearAll = () => {
     hiddenNumber = 0;
     numberEntryArray = [];
     display.innerText = displayNumber;
+    buttonReset();
 }
 
 clear.addEventListener('click', clearAll);
 
+// Positive / Negative Button
+
+const negativePositiveToggle = () => {
+    if(displayNumber == 0) {
+        display.innerText = displayNumber;
+    } else if(displayNumber > 0) {
+        let str = displayNumber.toString();
+        let arr = str.split('');
+        arr.unshift('-');
+        displayNumber = arr.join('');
+        display.innerText = displayNumber;
+    } else {
+        let str = displayNumber.toString();
+        let arr = str.split('');
+        arr.shift();
+        displayNumber = arr.join('');
+        display.innerText = displayNumber;
+    }
+}
+
+negative.addEventListener('click', negativePositiveToggle);
+
+// Percentage function
+
+const percentageCalculator = () => {
+    displayNumber = displayNumber / 100;
+    display.innerText = displayNumber;
+}
+
+percentage.addEventListener('click', percentageCalculator);
+
+// Divide function
+
+const divideCalculator = () => {
+    divide.style.backgroundColor = 'white';
+    divide.style.color = 'orange';
+    hiddenNumber = displayNumber;
+    numberEntryArray = [];
+    calculationOption = 1;
+}
+
+divide.addEventListener('click', divideCalculator);
+
+//Multiply function
+
+const multiplyCalculator = () => {
+    multiply.style.backgroundColor = 'white';
+    multiply.style.color = 'orange';
+    hiddenNumber = displayNumber;
+    numberEntryArray = [];
+    calculationOption = 2;
+}
+
+multiply.addEventListener('click', multiplyCalculator);
+
+
+
+/* + - x / just need to push displayNumber to hiddenNumber and reset diplay number
+           = function then performs the calculation. */
+
+const equalsButtonClick = () => {
+    if(calculationOption == 1) {
+        displayNumber = hiddenNumber / displayNumber;
+        display.innerText = displayNumber;
+        numberEntryArray = [];
+    } else if(calculationOption == 2) {
+        displayNumber = hiddenNumber * displayNumber;
+        display.innerText = displayNumber;
+        numberEntryArray = [];
+    }
+    buttonReset();
+    calculationOption = 0;
+}
+
+equals.addEventListener('click', equalsButtonClick);
