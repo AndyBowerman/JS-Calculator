@@ -235,11 +235,21 @@ percentage.addEventListener('click', percentageCalculator);
 // Divide function
 
 const divideCalculator = () => {
-    divide.style.backgroundColor = 'white';
-    divide.style.color = 'orange';
-    hiddenNumber = displayNumber;
-    numberEntryArray = [];
-    calculationOption = 1;
+    if(calculationOption == 0) {
+        divide.style.backgroundColor = 'white';
+        divide.style.color = 'orange';
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        calculationOption = 1;
+    } else {
+        equalsButtonClick();
+        divide.style.backgroundColor = 'white';
+        divide.style.color = 'orange';
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        calculationOption = 1;
+    }
+    
 }
 
 divide.addEventListener('click', divideCalculator);
@@ -247,11 +257,21 @@ divide.addEventListener('click', divideCalculator);
 //Multiply function
 
 const multiplyCalculator = () => {
-    multiply.style.backgroundColor = 'white';
-    multiply.style.color = 'orange';
-    hiddenNumber = displayNumber;
-    numberEntryArray = [];
-    calculationOption = 2;
+    if(calculationOption == 0) {
+        multiply.style.backgroundColor = 'white';
+        multiply.style.color = 'orange';
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        calculationOption = 2;
+    } else {
+        equalsButtonClick();
+        multiply.style.backgroundColor = 'white';
+        multiply.style.color = 'orange';
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        calculationOption = 2;
+    }
+    
 }
 
 multiply.addEventListener('click', multiplyCalculator);
@@ -259,11 +279,20 @@ multiply.addEventListener('click', multiplyCalculator);
 //Minus function
 
 const minusCalculator = () => {
-    minus.style.backgroundColor = 'white';
-    minus.style.color = 'orange';
-    hiddenNumber = displayNumber;
-    numberEntryArray = [];
-    calculationOption = 3;
+    if(calculationOption == 0) {
+        minus.style.backgroundColor = 'white';
+        minus.style.color = 'orange';
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        calculationOption = 3; 
+    } else {
+        equalsButtonClick();
+        minus.style.backgroundColor = 'white';
+        minus.style.color = 'orange';
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        calculationOption = 3; 
+    }
 }
 
 minus.addEventListener('click', minusCalculator);
@@ -271,11 +300,20 @@ minus.addEventListener('click', minusCalculator);
 //Plus function
 
 const plusCalculator = () => {
-    plus.style.backgroundColor = 'white';
-    plus.style.color = 'orange';
-    hiddenNumber = displayNumber;
-    numberEntryArray = [];
-    calculationOption = 4;
+    if(calculationOption == 0) {
+        plus.style.backgroundColor = 'white';
+        plus.style.color = 'orange';
+        hiddenNumber = parseInt(displayNumber);
+        numberEntryArray = [];
+        calculationOption = 4;
+    } else {
+        equalsButtonClick();
+            plus.style.backgroundColor = 'white';
+            plus.style.color = 'orange';
+            hiddenNumber = parseInt(displayNumber);
+            numberEntryArray = [];
+            calculationOption = 4;
+    }
 }
 
 plus.addEventListener('click', plusCalculator);
@@ -298,7 +336,8 @@ const equalsButtonClick = () => {
         display.innerText = displayNumber;
         numberEntryArray = [];
     } else if(calculationOption == 4) {
-        displayNumber = hiddenNumber + displayNumber;
+        displayNumber = parseInt(displayNumber);
+        displayNumber += hiddenNumber;
         display.innerText = displayNumber;
         numberEntryArray = [];
     }
