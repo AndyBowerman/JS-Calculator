@@ -256,6 +256,29 @@ const multiplyCalculator = () => {
 
 multiply.addEventListener('click', multiplyCalculator);
 
+//Minus function
+
+const minusCalculator = () => {
+    minus.style.backgroundColor = 'white';
+    minus.style.color = 'orange';
+    hiddenNumber = displayNumber;
+    numberEntryArray = [];
+    calculationOption = 3;
+}
+
+minus.addEventListener('click', minusCalculator);
+
+//Plus function
+
+const plusCalculator = () => {
+    plus.style.backgroundColor = 'white';
+    plus.style.color = 'orange';
+    hiddenNumber = displayNumber;
+    numberEntryArray = [];
+    calculationOption = 4;
+}
+
+plus.addEventListener('click', plusCalculator);
 
 
 /* + - x / just need to push displayNumber to hiddenNumber and reset diplay number
@@ -268,6 +291,14 @@ const equalsButtonClick = () => {
         numberEntryArray = [];
     } else if(calculationOption == 2) {
         displayNumber = hiddenNumber * displayNumber;
+        display.innerText = displayNumber;
+        numberEntryArray = [];
+    } else if(calculationOption == 3) {
+        displayNumber = hiddenNumber - displayNumber;
+        display.innerText = displayNumber;
+        numberEntryArray = [];
+    } else if(calculationOption == 4) {
+        displayNumber = hiddenNumber + displayNumber;
         display.innerText = displayNumber;
         numberEntryArray = [];
     }
