@@ -1,18 +1,7 @@
 /* 
 
-display
-    - global variable holding the number in the display
-    - global variable holding the hidden number 
-
-AC - function to return displayNumber & hiddenNumber to 0
-
-+/- - if number in display isn't a 0 make poisitive or negative depending what is already showing
-
-% - function to divide displayNumber by 100
-
-numbers - push to an array and joined so not back to front
-
-limit length of the number that can be entered
+bug in decimal function
+amendNumberLength changes font size if limit is exceeded. Need to make it change back when you revert back to numbers.
 
 */
 
@@ -78,7 +67,7 @@ const pushNumber = (num) => {
     if(numberEntryArray.length < 7) {
         numberEntryArray.push(num);
         displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
+        display.innerText = parseInt(displayNumber);
     }  
 }
 
@@ -102,7 +91,7 @@ zero.addEventListener('click', pushZero);
 
 //1-9 button eventListener
 buttonNumbersArray.forEach((button) => {
-    button.addEventListener('click', function(){ pushNumber(parseInt(button.value)) });
+    button.addEventListener('click', function(){ pushNumber(button.value) });
 })
 
 //Decimal button eventListener
@@ -125,6 +114,37 @@ const buttonReset = () => {
 }
 
 
+//shorten number to 7 digits including decimal - pass function to equalsButtonClick
+
+const amendNumberLength = (num) => {
+    //convert to string to find the length
+    const str = num.toString();
+    if(str.length > 7) {
+        //convert to array to find the index of the decimal
+        let arr = str.split('')
+        if(!arr.includes('.')) {
+            //if there's no decimal return error message
+            display.style.fontSize = "40px";
+            return 'Limit Exceeded';
+        } else {
+            decimalIndex = arr.indexOf('.') + 1;
+            // * 1 turns the string back into a number, parseInt doesn't work
+            let amendedNumber = arr.join('') * 1;
+            // 7 minus the position of the decimal gives correct number of decimal places regardless of the position of the decimal.
+            return amendedNumber.toFixed(7 - decimalIndex);
+        }
+    } else {
+        return str * 1;
+    }
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -136,6 +156,7 @@ const clearAll = () => {
     displayNumber = 0;
     hiddenNumber = 0;
     numberEntryArray = [];
+    calculationOption = 0;
     display.innerText = displayNumber;
     buttonReset();
 }
@@ -168,7 +189,7 @@ negative.addEventListener('click', negativePositiveToggle);
 
 const percentageCalculator = () => {
     displayNumber = displayNumber / 100;
-    display.innerText = displayNumber;
+    display.innerText = amendNumberLength(displayNumber);
 }
 
 percentage.addEventListener('click', percentageCalculator);
@@ -252,27 +273,35 @@ const plusCalculator = () => {
 plus.addEventListener('click', plusCalculator);
 
 
-/* + - x / just need to push displayNumber to hiddenNumber and reset diplay number
-           = function then performs the calculation. */
+
+
+
+
+
+
+
+
 
 const equalsButtonClick = () => {
     if(calculationOption == 1) {
         displayNumber = hiddenNumber / displayNumber;
-        display.innerText = displayNumber;
+        display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
     } else if(calculationOption == 2) {
         displayNumber = hiddenNumber * displayNumber;
-        display.innerText = displayNumber;
+        display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
     } else if(calculationOption == 3) {
         displayNumber = hiddenNumber - displayNumber;
-        display.innerText = displayNumber;
+        display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
     } else if(calculationOption == 4) {
         displayNumber = parseInt(displayNumber);
         displayNumber += hiddenNumber;
-        display.innerText = displayNumber;
+        display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
+    } else {
+        display.innerText = displayNumber;
     }
     buttonReset();
     calculationOption = 0;
