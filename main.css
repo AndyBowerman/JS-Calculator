@@ -22,6 +22,11 @@
   color: #ffffff;
 }
 
+.highlight {
+  background-color: #ffffff;
+  color: #ffa500;
+}
+
 #calculator__0 {
   width: 140px;
   border-radius: 40px;

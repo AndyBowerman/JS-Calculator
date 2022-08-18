@@ -50,6 +50,12 @@ const decimal = document.getElementById("calculator__decimal");
 const buttonNumbersArray = [one, two, three, four, five, six, seven, eight, nine];
 
 
+
+
+
+
+
+
 // Update displayNumber
 
 //Default display
@@ -102,18 +108,27 @@ buttonNumbersArray.forEach((button) => {
 //Decimal button eventListener
 decimal.addEventListener('click', pushDecimal);
 
-//Change button colour back to original styling. + - / * change colour when selected.
+
+
+
+
+
+
+
+// Remove highlight on + - / * button when not selected - function passed into plus, minus, multiply, divide & equals function
 
 const buttonReset = () => {
-    divide.style.backgroundColor = 'orange';
-    divide.style.color = 'white';
-    multiply.style.backgroundColor = 'orange';
-    multiply.style.color = 'white';
-    minus.style.backgroundColor = 'orange';
-    minus.style.color = 'white';
-    plus.style.backgroundColor = 'orange';
-    plus.style.color = 'white';
+    divide.classList.remove('highlight');
+    multiply.classList.remove('highlight');
+    minus.classList.remove('highlight');
+    plus.classList.remove('highlight');
 }
+
+
+
+
+
+
 
 // Clear Function
 
@@ -162,15 +177,13 @@ percentage.addEventListener('click', percentageCalculator);
 
 const divideCalculator = () => {
     if(calculationOption == 0) {
-        divide.style.backgroundColor = 'white';
-        divide.style.color = 'orange';
+        divide.classList.add('highlight');
         hiddenNumber = displayNumber;
         numberEntryArray = [];
         calculationOption = 1;
     } else {
         equalsButtonClick();
-        divide.style.backgroundColor = 'white';
-        divide.style.color = 'orange';
+        divide.classList.add('highlight');
         hiddenNumber = displayNumber;
         numberEntryArray = [];
         calculationOption = 1;
@@ -184,15 +197,13 @@ divide.addEventListener('click', divideCalculator);
 
 const multiplyCalculator = () => {
     if(calculationOption == 0) {
-        multiply.style.backgroundColor = 'white';
-        multiply.style.color = 'orange';
+        multiply.classList.add('highlight');
         hiddenNumber = displayNumber;
         numberEntryArray = [];
         calculationOption = 2;
     } else {
         equalsButtonClick();
-        multiply.style.backgroundColor = 'white';
-        multiply.style.color = 'orange';
+        multiply.classList.add('highlight');
         hiddenNumber = displayNumber;
         numberEntryArray = [];
         calculationOption = 2;
@@ -206,15 +217,13 @@ multiply.addEventListener('click', multiplyCalculator);
 
 const minusCalculator = () => {
     if(calculationOption == 0) {
-        minus.style.backgroundColor = 'white';
-        minus.style.color = 'orange';
+        minus.classList.add('highlight');
         hiddenNumber = displayNumber;
         numberEntryArray = [];
         calculationOption = 3; 
     } else {
         equalsButtonClick();
-        minus.style.backgroundColor = 'white';
-        minus.style.color = 'orange';
+        minus.classList.add('highlight');
         hiddenNumber = displayNumber;
         numberEntryArray = [];
         calculationOption = 3; 
@@ -227,15 +236,13 @@ minus.addEventListener('click', minusCalculator);
 
 const plusCalculator = () => {
     if(calculationOption == 0) {
-        plus.style.backgroundColor = 'white';
-        plus.style.color = 'orange';
+        plus.classList.add('highlight');
         hiddenNumber = parseInt(displayNumber);
         numberEntryArray = [];
         calculationOption = 4;
     } else {
         equalsButtonClick();
-            plus.style.backgroundColor = 'white';
-            plus.style.color = 'orange';
+            plus.classList.add('highlight');
             hiddenNumber = parseInt(displayNumber);
             numberEntryArray = [];
             calculationOption = 4;
