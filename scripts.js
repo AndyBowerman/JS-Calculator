@@ -16,11 +16,16 @@ limit length of the number that can be entered
 
 */
 
-let displayNumber = 0;
-let hiddenNumber = 0;
+// each number function pushes to the back of this array which is then joined and set as display value
 let numberEntryArray = [];
+let displayNumber = 0;
+// hiddenNumber takes the same value as displayNumber when - + / * selected. display number is then reset to 0
+let hiddenNumber = 0;
+
+// alters which function the equals function performs. variable set to 1, 2, 3, 4 depending on whether + - / * has been selected
 let calculationOption = 0;
 
+//Variables
 const display = document.querySelector(".calculator__display--p");
 const clear = document.getElementById("calculator__clear");
 const negative = document.getElementById("calculator__negative");
@@ -42,6 +47,8 @@ const eight = document.getElementById("calculator__8");
 const nine = document.getElementById("calculator__9");
 const decimal = document.getElementById("calculator__decimal");
 
+const buttonNumbersArray = [one, two, three, four, five, six, seven, eight, nine];
+
 
 // Update displayNumber
 
@@ -49,6 +56,7 @@ const decimal = document.getElementById("calculator__decimal");
 display.innerText = displayNumber;
 
 //pushZero doesn't allow zero to be entered first unless a decimal follows which is handled in pushDecimal
+//if statement limits number of digits that can be entered
 const pushZero = () => {
     if(numberEntryArray.length < 7 && numberEntryArray.length > 0) {
         numberEntryArray.push(0);
@@ -59,94 +67,13 @@ const pushZero = () => {
     }    
 }
 
-const pushOne = () => {
+//pushNumber handles 1-9 with forEach used to assign eventListener and push the button value
+const pushNumber = (num) => {
     if(numberEntryArray.length < 7) {
-        numberEntryArray.push(1);
+        numberEntryArray.push(num);
         displayNumber = numberEntryArray.join('');
         display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushTwo = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(2);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushThree = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(3);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushFour = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(4);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushFive = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(5);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushSix = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(6);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushSeven = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(7);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushEight = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(8);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
-}
-
-const pushNine = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(9);
-        displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
+    }  
 }
 
 //if statement stops decimal being entered twice in the same number and adds a 0 in front if decmial is entered first.
@@ -164,16 +91,15 @@ const pushDecimal = () => {
     }    
 }
 
+//Zero button eventListener
 zero.addEventListener('click', pushZero);
-one.addEventListener('click', pushOne);
-two.addEventListener('click', pushTwo);
-three.addEventListener('click', pushThree);
-four.addEventListener('click', pushFour);
-five.addEventListener('click', pushFive);
-six.addEventListener('click', pushSix);
-seven.addEventListener('click', pushSeven);
-eight.addEventListener('click', pushEight);
-nine.addEventListener('click', pushNine);
+
+//1-9 button eventListener
+buttonNumbersArray.forEach((button) => {
+    button.addEventListener('click', function(){ pushNumber(parseInt(button.value)) });
+})
+
+//Decimal button eventListener
 decimal.addEventListener('click', pushDecimal);
 
 //Change button colour back to original styling. + - / * change colour when selected.
