@@ -1,7 +1,6 @@
 /* 
 
-bug in decimal function
-amendNumberLength changes font size if limit is exceeded. Need to make it change back when you revert back to numbers.
+displayNumber should only be a string after decimal is selected at which point nothing should work without another number being selected.
 
 */
 
@@ -40,11 +39,6 @@ const buttonNumbersArray = [one, two, three, four, five, six, seven, eight, nine
 
 
 
-
-
-
-
-
 // Update displayNumber
 
 //Default display
@@ -53,13 +47,12 @@ display.innerText = displayNumber;
 //pushZero doesn't allow zero to be entered first unless a decimal follows which is handled in pushDecimal
 //if statement limits number of digits that can be entered
 const pushZero = () => {
-    if(numberEntryArray.length < 7 && numberEntryArray.length > 0) {
+    if(numberEntryArray.length < 7) {
         numberEntryArray.push(0);
         displayNumber = numberEntryArray.join('');
-        display.innerText = displayNumber;
-    } else {
-        display.innerText = displayNumber;
-    }    
+        display.style.fontSize = "60px";
+        display.innerText = amendNumberLength(displayNumber);
+    }   
 }
 
 //pushNumber handles 1-9 with forEach used to assign eventListener and push the button value
@@ -68,24 +61,19 @@ const pushNumber = (num) => {
         numberEntryArray.push(num);
         displayNumber = numberEntryArray.join('');
         display.style.fontSize = "60px";
-        display.innerText = parseInt(displayNumber);
+        display.innerText = amendNumberLength(displayNumber);
     }  
 }
 
 //if statement stops decimal being entered twice in the same number and adds a 0 in front if decmial is entered first.
 const pushDecimal = () => {
     if(numberEntryArray.length < 7 && numberEntryArray.length > 0) {
-        if(numberEntryArray.indexOf('.') < 0) {
+        if(!numberEntryArray.includes('.')) {
             numberEntryArray.push('.');
             displayNumber = numberEntryArray.join('');
             display.innerText = displayNumber;
         }
-    } else {
-        numberEntryArray.push('0.');
-        displayNumber = numberEntryArray.join('');
-        display.style.fontSize = "60px";
-        display.innerText = displayNumber;
-    }    
+    }
 }
 
 //Zero button eventListener
@@ -135,10 +123,12 @@ const amendNumberLength = (num) => {
             // * 1 turns the string back into a number, parseInt doesn't work
             let amendedNumber = arr.join('') * 1;
             // 7 minus the position of the decimal gives correct number of decimal places regardless of the position of the decimal.
-            return amendedNumber.toFixed(7 - decimalIndex);
+            displayNumber = amendedNumber.toFixed(7 - decimalIndex);
+            return displayNumber;
         }
     } else {
-        return str * 1;
+        displayNumber = str * 1;
+        return displayNumber;
     }
 }
 
@@ -204,18 +194,20 @@ percentage.addEventListener('click', percentageCalculator);
 // Divide function
 
 const divideCalculator = () => {
-    if(displayNumber != 'Limit Exceeded') {
-        if(calculationOption == 0) {
-            divide.classList.add('highlight');
-            hiddenNumber = displayNumber;
-            numberEntryArray = [];
-            calculationOption = 1;
-        } else {
-            equalsButtonClick();
-            divide.classList.add('highlight');
-            hiddenNumber = displayNumber;
-            numberEntryArray = [];
-            calculationOption = 1;
+    if(displayNumber != 0) {
+        if(displayNumber != 'Limit Exceeded') {
+            if(calculationOption == 0) {
+                divide.classList.add('highlight');
+                hiddenNumber = displayNumber;
+                numberEntryArray = [];
+                calculationOption = 1;
+            } else {
+                equalsButtonClick();
+                divide.classList.add('highlight');
+                hiddenNumber = displayNumber;
+                numberEntryArray = [];
+                calculationOption = 1;
+            }
         }
     }
 }
@@ -225,20 +217,22 @@ divide.addEventListener('click', divideCalculator);
 //Multiply function
 
 const multiplyCalculator = () => {
-    if(displayNumber != 'Limit Exceeded') {
-        if(calculationOption == 0) {
-            multiply.classList.add('highlight');
-            hiddenNumber = displayNumber;
-            numberEntryArray = [];
-            calculationOption = 2;
-        } else {
-            equalsButtonClick();
-            multiply.classList.add('highlight');
-            hiddenNumber = displayNumber;
-            numberEntryArray = [];
-            calculationOption = 2;
-        }
-    }    
+    if(displayNumber != 0) {
+        if(displayNumber != 'Limit Exceeded') {
+            if(calculationOption == 0) {
+                multiply.classList.add('highlight');
+                hiddenNumber = displayNumber;
+                numberEntryArray = [];
+                calculationOption = 2;
+            } else {
+                equalsButtonClick();
+                multiply.classList.add('highlight');
+                hiddenNumber = displayNumber;
+                numberEntryArray = [];
+                calculationOption = 2;
+            }
+        }  
+    }  
 }
 
 multiply.addEventListener('click', multiplyCalculator);
@@ -246,18 +240,20 @@ multiply.addEventListener('click', multiplyCalculator);
 //Minus function
 
 const minusCalculator = () => {
-    if(displayNumber != 'Limit Exceeded') {
-        if(calculationOption == 0) {
-            minus.classList.add('highlight');
-            hiddenNumber = displayNumber;
-            numberEntryArray = [];
-            calculationOption = 3; 
-        } else {
-            equalsButtonClick();
-            minus.classList.add('highlight');
-            hiddenNumber = displayNumber;
-            numberEntryArray = [];
-            calculationOption = 3; 
+    if(displayNumber != 0) {
+        if(displayNumber != 'Limit Exceeded') {
+            if(calculationOption == 0) {
+                minus.classList.add('highlight');
+                hiddenNumber = displayNumber;
+                numberEntryArray = [];
+                calculationOption = 3; 
+            } else {
+                equalsButtonClick();
+                minus.classList.add('highlight');
+                hiddenNumber = displayNumber;
+                numberEntryArray = [];
+                calculationOption = 3; 
+            }
         }
     }
 }
@@ -267,18 +263,20 @@ minus.addEventListener('click', minusCalculator);
 //Plus function
 
 const plusCalculator = () => {
-    if(displayNumber != 'Limit Exceeded') {
-        if(calculationOption == 0) {
-            plus.classList.add('highlight');
-            hiddenNumber = parseInt(displayNumber);
-            numberEntryArray = [];
-            calculationOption = 4;
-        } else {
-            equalsButtonClick();
+    if(displayNumber != 0) {
+        if(displayNumber != 'Limit Exceeded') {
+            if(calculationOption == 0) {
                 plus.classList.add('highlight');
                 hiddenNumber = parseInt(displayNumber);
                 numberEntryArray = [];
                 calculationOption = 4;
+            } else {
+                equalsButtonClick();
+                    plus.classList.add('highlight');
+                    hiddenNumber = parseInt(displayNumber);
+                    numberEntryArray = [];
+                    calculationOption = 4;
+            }
         }
     }
 }
