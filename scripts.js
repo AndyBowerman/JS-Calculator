@@ -161,15 +161,17 @@ clear.addEventListener('click', clearAll);
 // Positive / Negative Button
 
 const negativePositiveToggle = () => {
-        if(displayNumber == 0) {
+        if(displayNumber == 0 || typeof displayNumber == "string") {
             display.innerText = displayNumber;
     }   else if(displayNumber > 0) {
+            //turn the number into a negative
             let str = displayNumber.toString();
             let arr = str.split('');
             arr.unshift('-');
             displayNumber = arr.join('');
             display.innerText = amendNumberLength(displayNumber);
         } else {
+            //turn the number into a positive
             let str = displayNumber.toString();
             let arr = str.split('');
             arr.shift();
@@ -183,7 +185,7 @@ negative.addEventListener('click', negativePositiveToggle);
 // Percentage function
 
 const percentageCalculator = () => {
-    if(displayNumber != 'Limit Exceeded') {
+    if(typeof displayNumber == "number") {
         displayNumber = displayNumber / 100;
         display.innerText = amendNumberLength(displayNumber);
     }
