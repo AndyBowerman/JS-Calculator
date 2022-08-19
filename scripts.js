@@ -1,11 +1,6 @@
-/* 
-
-displayNumber should only be a string after decimal is selected at which point nothing should work without another number being selected.
-
-*/
-
-// each number function pushes to the back of this array which is then joined and set as display value
+// each number function pushes to the back of this array which is then joined and set as the value of displayNumber
 let numberEntryArray = [];
+// variable to hold the number visible in the calculator display
 let displayNumber = 0;
 // hiddenNumber takes the same value as displayNumber when - + / * selected. display number is then reset to 0
 let hiddenNumber = 0;
@@ -35,76 +30,13 @@ const eight = document.getElementById("calculator__8");
 const nine = document.getElementById("calculator__9");
 const decimal = document.getElementById("calculator__decimal");
 
-const buttonNumbersArray = [one, two, three, four, five, six, seven, eight, nine];
+// arrays to loop through to apply multiple eventlisteners at once.
+const buttonNumbersArray = [zero, one, two, three, four, five, six, seven, eight, nine];
+const arithmeticArray = [divide, multiply, minus, plus];
 
 
 
-// Update displayNumber
-
-//Default display
-display.innerText = displayNumber;
-
-//pushZero doesn't allow zero to be entered first unless a decimal follows which is handled in pushDecimal
-//if statement limits number of digits that can be entered
-const pushZero = () => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(0);
-        displayNumber = numberEntryArray.join('');
-        display.style.fontSize = "60px";
-        display.innerText = amendNumberLength(displayNumber);
-    }   
-}
-
-//pushNumber handles 1-9 with forEach used to assign eventListener and push the button value
-const pushNumber = (num) => {
-    if(numberEntryArray.length < 7) {
-        numberEntryArray.push(num);
-        displayNumber = numberEntryArray.join('');
-        display.style.fontSize = "60px";
-        display.innerText = amendNumberLength(displayNumber);
-    }  
-}
-
-//if statement stops decimal being entered twice in the same number and adds a 0 in front if decmial is entered first.
-const pushDecimal = () => {
-    if(numberEntryArray.length < 7 && numberEntryArray.length > 0) {
-        if(!numberEntryArray.includes('.')) {
-            numberEntryArray.push('.');
-            displayNumber = numberEntryArray.join('');
-            display.innerText = displayNumber;
-        }
-    }
-}
-
-//Zero button eventListener
-zero.addEventListener('click', pushZero);
-
-//1-9 button eventListener
-buttonNumbersArray.forEach((button) => {
-    button.addEventListener('click', function(){ pushNumber(button.value) });
-})
-
-//Decimal button eventListener
-decimal.addEventListener('click', pushDecimal);
-
-
-
-
-
-
-
-
-// Remove highlight on + - / * button when not selected - function passed into plus, minus, multiply, divide & equals function
-
-const buttonReset = () => {
-    divide.classList.remove('highlight');
-    multiply.classList.remove('highlight');
-    minus.classList.remove('highlight');
-    plus.classList.remove('highlight');
-}
-
-
-//shorten number to 7 digits including decimal - pass function to equalsButtonClick
+//shortens displayNumber to 7 digits including decimal and converts any strings to a number unless length exceeded - passed into all other functions except pushDecimal
 
 const amendNumberLength = (num) => {
     //convert to string to find the length
@@ -127,6 +59,7 @@ const amendNumberLength = (num) => {
             return displayNumber;
         }
     } else {
+        //convert string to number;
         displayNumber = str * 1;
         return displayNumber;
     }
@@ -134,17 +67,65 @@ const amendNumberLength = (num) => {
 
 
 
+// INPUT NUMBERS & DECIMALS
+
+//Default display
+display.innerText = displayNumber;
+
+//pushNumber handles 0-9 with forEach used to assign eventListener and push the button value
+const pushNumber = (num) => {
+    //limit number of digits entered to 7
+    if(numberEntryArray.length < 7) {
+        numberEntryArray.push(num);
+        //num represents button.value which is the number required
+        displayNumber = numberEntryArray.join('');
+        display.style.fontSize = "60px";
+        display.innerText = amendNumberLength(displayNumber);
+    }  
+}
+
+/* push decimal place into number - displayNumber is a string following this function but can only
+be followed by pushing a number which reverts displayNumber back to a string */
+const pushDecimal = () => {
+    //stop decimal being entered first
+    if(numberEntryArray.length < 7 && numberEntryArray.length > 0) {
+        //stop decimal being entered twice
+        if(!numberEntryArray.includes('.')) {
+            numberEntryArray.push('.');
+            displayNumber = numberEntryArray.join('');
+            display.innerText = displayNumber;
+        }
+    }
+}
+
+
+
+//0-9 button eventListener - passing the value of the button to give the relevant number
+buttonNumbersArray.forEach((button) => {
+    button.addEventListener('click', function(){ pushNumber(button.value) });
+})
+
+//Decimal button eventListener
+decimal.addEventListener('click', pushDecimal);
 
 
 
 
+// Remove highlight on + - / * button when not selected - function passed into clearall & equals function
+
+const buttonReset = () => {
+    //remove class highlight - could have passed button value as argument but only 4 buttons so typed out
+    divide.classList.remove('highlight');
+    multiply.classList.remove('highlight');
+    minus.classList.remove('highlight');
+    plus.classList.remove('highlight');
+}
 
 
 
+// CALCULATION FUNCTIONS
 
-
-
-// Clear Function
+// Clear Function - resets everything
 
 const clearAll = () => {
     display.style.fontSize = "60px";
@@ -161,30 +142,34 @@ clear.addEventListener('click', clearAll);
 // Positive / Negative Button
 
 const negativePositiveToggle = () => {
-        if(displayNumber == 0 || typeof displayNumber == "string") {
-            display.innerText = displayNumber;
-    }   else if(displayNumber > 0) {
-            //turn the number into a negative
-            let str = displayNumber.toString();
-            let arr = str.split('');
-            arr.unshift('-');
-            displayNumber = arr.join('');
-            display.innerText = amendNumberLength(displayNumber);
-        } else {
-            //turn the number into a positive
-            let str = displayNumber.toString();
-            let arr = str.split('');
-            arr.shift();
-            displayNumber = arr.join('');
-            display.innerText = amendNumberLength(displayNumber);
-        }
-    }    
+    //function won't run if the number is negative or a string - should only be a string following a decimal or if limit exceeded
+    if(displayNumber == 0 || typeof displayNumber == "string") {
+        display.innerText = displayNumber;
+    } else if(displayNumber > 0) {
+        //turn the number into a negative - split to array
+        let str = displayNumber.toString();
+        let arr = str.split('');
+        //add - to the front of array
+        arr.unshift('-');
+        displayNumber = arr.join('');
+        //join together and convert to number by running through amendNumberLength
+        display.innerText = amendNumberLength(displayNumber);
+    } else {
+        //turn the number into a positive - as above but removes the "-"
+        let str = displayNumber.toString();
+        let arr = str.split('');
+        arr.shift();
+        displayNumber = arr.join('');
+        display.innerText = amendNumberLength(displayNumber);
+    }
+}    
 
 negative.addEventListener('click', negativePositiveToggle);
 
-// Percentage function
+// Percentage function - divides number by 100
 
 const percentageCalculator = () => {
+    //only runs on numbers
     if(typeof displayNumber == "number") {
         displayNumber = displayNumber / 100;
         display.innerText = amendNumberLength(displayNumber);
@@ -194,101 +179,55 @@ const percentageCalculator = () => {
 percentage.addEventListener('click', percentageCalculator);
 
 
-//Calculation functions - condense to one function? 
+//Calculation functions - accepts a button from arithmeticArray 
 
-// Divide function
-
-const divideCalculator = () => {
+const calculationSelector = (button) => {
+    //doesn't run on strings
     if(typeof displayNumber != 'string') {
+        //runs equalsButtonClick so users can chain calculations. If calculationOption is set to 0 ie a calculationSelector hadn't been chosen before nothing happens
         equalsButtonClick();
-        divide.classList.add('highlight');
+        //Add class to selected button - alters style
+        button.classList.add('highlight');
+        //store the displayNumber at the point the selector is clicked in hiddenNumber variable
         hiddenNumber = displayNumber;
+        //reset displayNumber & numberEntryArray so user can insert the 2nd number in the calculation
         numberEntryArray = [];
         displayNumber = 0;
-        calculationOption = 1;
+        //calculationOption determines what calculation the equals function performs
+        calculationOption = button.value;
     }
 }
 
-divide.addEventListener('click', divideCalculator);
-
-//Multiply function
-
-const multiplyCalculator = () => {
-    if(typeof displayNumber != 'string') {
-        equalsButtonClick();
-        multiply.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        displayNumber = 0;
-        calculationOption = 2;
-    }  
-}
-
-multiply.addEventListener('click', multiplyCalculator);
-
-//Minus function
-
-const minusCalculator = () => {
-    if(typeof displayNumber != 'string') {
-        equalsButtonClick();
-        minus.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        displayNumber = 0;
-        calculationOption = 3;
-    }  
-}
-
-minus.addEventListener('click', minusCalculator);
-
-//Plus function
-
-const plusCalculator = () => {
-    if(typeof displayNumber != 'string') {
-        equalsButtonClick();
-        plus.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        displayNumber = 0;
-        calculationOption = 4;
-    }  
-}
-
-plus.addEventListener('click', plusCalculator);
-
-
-
-
-
-
-
-
-
+arithmeticArray.forEach((button) => button.addEventListener('click', function(){ calculationSelector(button) }))
 
 
 const equalsButtonClick = () => {
-    if(calculationOption == 1) {
+    //calculationOption determines which of the below options is performed
+    //displayNumber updated to the result of the calculation, run through amendNumberLength to ensure doesn't exceed 7 digits and displayed
+    //numberEntryArray reset which will amend displayNumber when user inputs. Didn't reset now or would delete the result before the user can see it. 
+    if(calculationOption == 'divide') {
         displayNumber = hiddenNumber / displayNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
         buttonReset();
-    } else if(calculationOption == 2) {
+    } else if(calculationOption == 'multiply') {
         displayNumber = hiddenNumber * displayNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
         buttonReset();
-    } else if(calculationOption == 3) {
+    } else if(calculationOption == 'minus') {
         displayNumber = hiddenNumber - displayNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
         buttonReset();
-    } else if(calculationOption == 4) {
+    } else if(calculationOption == 'plus') {
         displayNumber = parseInt(displayNumber);
         displayNumber += hiddenNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
         buttonReset();
     }
+    //calculationOption reset so equals won't continue to perform sums without reselecting + - * / 
     calculationOption = 0;
 }
 
