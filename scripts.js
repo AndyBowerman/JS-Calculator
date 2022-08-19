@@ -193,24 +193,19 @@ const percentageCalculator = () => {
 
 percentage.addEventListener('click', percentageCalculator);
 
+
+//Calculation functions - condense to one function? 
+
 // Divide function
 
 const divideCalculator = () => {
-    if(displayNumber != 0) {
-        if(displayNumber != 'Limit Exceeded') {
-            if(calculationOption == 0) {
-                divide.classList.add('highlight');
-                hiddenNumber = displayNumber;
-                numberEntryArray = [];
-                calculationOption = 1;
-            } else {
-                equalsButtonClick();
-                divide.classList.add('highlight');
-                hiddenNumber = displayNumber;
-                numberEntryArray = [];
-                calculationOption = 1;
-            }
-        }
+    if(typeof displayNumber != 'string') {
+        equalsButtonClick();
+        divide.classList.add('highlight');
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        displayNumber = 0;
+        calculationOption = 1;
     }
 }
 
@@ -219,21 +214,13 @@ divide.addEventListener('click', divideCalculator);
 //Multiply function
 
 const multiplyCalculator = () => {
-    if(displayNumber != 0) {
-        if(displayNumber != 'Limit Exceeded') {
-            if(calculationOption == 0) {
-                multiply.classList.add('highlight');
-                hiddenNumber = displayNumber;
-                numberEntryArray = [];
-                calculationOption = 2;
-            } else {
-                equalsButtonClick();
-                multiply.classList.add('highlight');
-                hiddenNumber = displayNumber;
-                numberEntryArray = [];
-                calculationOption = 2;
-            }
-        }  
+    if(typeof displayNumber != 'string') {
+        equalsButtonClick();
+        multiply.classList.add('highlight');
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        displayNumber = 0;
+        calculationOption = 2;
     }  
 }
 
@@ -242,22 +229,14 @@ multiply.addEventListener('click', multiplyCalculator);
 //Minus function
 
 const minusCalculator = () => {
-    if(displayNumber != 0) {
-        if(displayNumber != 'Limit Exceeded') {
-            if(calculationOption == 0) {
-                minus.classList.add('highlight');
-                hiddenNumber = displayNumber;
-                numberEntryArray = [];
-                calculationOption = 3; 
-            } else {
-                equalsButtonClick();
-                minus.classList.add('highlight');
-                hiddenNumber = displayNumber;
-                numberEntryArray = [];
-                calculationOption = 3; 
-            }
-        }
-    }
+    if(typeof displayNumber != 'string') {
+        equalsButtonClick();
+        minus.classList.add('highlight');
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        displayNumber = 0;
+        calculationOption = 3;
+    }  
 }
 
 minus.addEventListener('click', minusCalculator);
@@ -265,22 +244,14 @@ minus.addEventListener('click', minusCalculator);
 //Plus function
 
 const plusCalculator = () => {
-    if(displayNumber != 0) {
-        if(displayNumber != 'Limit Exceeded') {
-            if(calculationOption == 0) {
-                plus.classList.add('highlight');
-                hiddenNumber = parseInt(displayNumber);
-                numberEntryArray = [];
-                calculationOption = 4;
-            } else {
-                equalsButtonClick();
-                    plus.classList.add('highlight');
-                    hiddenNumber = parseInt(displayNumber);
-                    numberEntryArray = [];
-                    calculationOption = 4;
-            }
-        }
-    }
+    if(typeof displayNumber != 'string') {
+        equalsButtonClick();
+        plus.classList.add('highlight');
+        hiddenNumber = displayNumber;
+        numberEntryArray = [];
+        displayNumber = 0;
+        calculationOption = 4;
+    }  
 }
 
 plus.addEventListener('click', plusCalculator);
@@ -300,23 +271,24 @@ const equalsButtonClick = () => {
         displayNumber = hiddenNumber / displayNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
+        buttonReset();
     } else if(calculationOption == 2) {
         displayNumber = hiddenNumber * displayNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
+        buttonReset();
     } else if(calculationOption == 3) {
         displayNumber = hiddenNumber - displayNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
+        buttonReset();
     } else if(calculationOption == 4) {
         displayNumber = parseInt(displayNumber);
         displayNumber += hiddenNumber;
         display.innerText = amendNumberLength(displayNumber);
         numberEntryArray = [];
-    } else {
-        display.innerText = displayNumber;
+        buttonReset();
     }
-    buttonReset();
     calculationOption = 0;
 }
 
