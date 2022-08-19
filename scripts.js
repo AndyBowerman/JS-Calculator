@@ -67,6 +67,7 @@ const pushNumber = (num) => {
     if(numberEntryArray.length < 7) {
         numberEntryArray.push(num);
         displayNumber = numberEntryArray.join('');
+        display.style.fontSize = "60px";
         display.innerText = parseInt(displayNumber);
     }  
 }
@@ -82,6 +83,7 @@ const pushDecimal = () => {
     } else {
         numberEntryArray.push('0.');
         displayNumber = numberEntryArray.join('');
+        display.style.fontSize = "60px";
         display.innerText = displayNumber;
     }    
 }
@@ -125,7 +127,9 @@ const amendNumberLength = (num) => {
         if(!arr.includes('.')) {
             //if there's no decimal return error message
             display.style.fontSize = "40px";
-            return 'Limit Exceeded';
+            //Set displayNumber to 'Limit Exceeded' to stop the other functions running on it
+            displayNumber = 'Limit Exceeded';
+            return displayNumber;
         } else {
             decimalIndex = arr.indexOf('.') + 1;
             // * 1 turns the string back into a number, parseInt doesn't work
@@ -153,6 +157,7 @@ const amendNumberLength = (num) => {
 // Clear Function
 
 const clearAll = () => {
+    display.style.fontSize = "60px";
     displayNumber = 0;
     hiddenNumber = 0;
     numberEntryArray = [];
@@ -166,30 +171,32 @@ clear.addEventListener('click', clearAll);
 // Positive / Negative Button
 
 const negativePositiveToggle = () => {
-    if(displayNumber == 0) {
-        display.innerText = displayNumber;
-    } else if(displayNumber > 0) {
-        let str = displayNumber.toString();
-        let arr = str.split('');
-        arr.unshift('-');
-        displayNumber = arr.join('');
-        display.innerText = displayNumber;
-    } else {
-        let str = displayNumber.toString();
-        let arr = str.split('');
-        arr.shift();
-        displayNumber = arr.join('');
-        display.innerText = displayNumber;
-    }
-}
+        if(displayNumber == 0) {
+            display.innerText = displayNumber;
+    }   else if(displayNumber > 0) {
+            let str = displayNumber.toString();
+            let arr = str.split('');
+            arr.unshift('-');
+            displayNumber = arr.join('');
+            display.innerText = amendNumberLength(displayNumber);
+        } else {
+            let str = displayNumber.toString();
+            let arr = str.split('');
+            arr.shift();
+            displayNumber = arr.join('');
+            display.innerText = amendNumberLength(displayNumber);
+        }
+    }    
 
 negative.addEventListener('click', negativePositiveToggle);
 
 // Percentage function
 
 const percentageCalculator = () => {
-    displayNumber = displayNumber / 100;
-    display.innerText = amendNumberLength(displayNumber);
+    if(displayNumber != 'Limit Exceeded') {
+        displayNumber = displayNumber / 100;
+        display.innerText = amendNumberLength(displayNumber);
+    }
 }
 
 percentage.addEventListener('click', percentageCalculator);
@@ -197,19 +204,20 @@ percentage.addEventListener('click', percentageCalculator);
 // Divide function
 
 const divideCalculator = () => {
-    if(calculationOption == 0) {
-        divide.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        calculationOption = 1;
-    } else {
-        equalsButtonClick();
-        divide.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        calculationOption = 1;
+    if(displayNumber != 'Limit Exceeded') {
+        if(calculationOption == 0) {
+            divide.classList.add('highlight');
+            hiddenNumber = displayNumber;
+            numberEntryArray = [];
+            calculationOption = 1;
+        } else {
+            equalsButtonClick();
+            divide.classList.add('highlight');
+            hiddenNumber = displayNumber;
+            numberEntryArray = [];
+            calculationOption = 1;
+        }
     }
-    
 }
 
 divide.addEventListener('click', divideCalculator);
@@ -217,19 +225,20 @@ divide.addEventListener('click', divideCalculator);
 //Multiply function
 
 const multiplyCalculator = () => {
-    if(calculationOption == 0) {
-        multiply.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        calculationOption = 2;
-    } else {
-        equalsButtonClick();
-        multiply.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        calculationOption = 2;
-    }
-    
+    if(displayNumber != 'Limit Exceeded') {
+        if(calculationOption == 0) {
+            multiply.classList.add('highlight');
+            hiddenNumber = displayNumber;
+            numberEntryArray = [];
+            calculationOption = 2;
+        } else {
+            equalsButtonClick();
+            multiply.classList.add('highlight');
+            hiddenNumber = displayNumber;
+            numberEntryArray = [];
+            calculationOption = 2;
+        }
+    }    
 }
 
 multiply.addEventListener('click', multiplyCalculator);
@@ -237,17 +246,19 @@ multiply.addEventListener('click', multiplyCalculator);
 //Minus function
 
 const minusCalculator = () => {
-    if(calculationOption == 0) {
-        minus.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        calculationOption = 3; 
-    } else {
-        equalsButtonClick();
-        minus.classList.add('highlight');
-        hiddenNumber = displayNumber;
-        numberEntryArray = [];
-        calculationOption = 3; 
+    if(displayNumber != 'Limit Exceeded') {
+        if(calculationOption == 0) {
+            minus.classList.add('highlight');
+            hiddenNumber = displayNumber;
+            numberEntryArray = [];
+            calculationOption = 3; 
+        } else {
+            equalsButtonClick();
+            minus.classList.add('highlight');
+            hiddenNumber = displayNumber;
+            numberEntryArray = [];
+            calculationOption = 3; 
+        }
     }
 }
 
@@ -256,17 +267,19 @@ minus.addEventListener('click', minusCalculator);
 //Plus function
 
 const plusCalculator = () => {
-    if(calculationOption == 0) {
-        plus.classList.add('highlight');
-        hiddenNumber = parseInt(displayNumber);
-        numberEntryArray = [];
-        calculationOption = 4;
-    } else {
-        equalsButtonClick();
+    if(displayNumber != 'Limit Exceeded') {
+        if(calculationOption == 0) {
             plus.classList.add('highlight');
             hiddenNumber = parseInt(displayNumber);
             numberEntryArray = [];
             calculationOption = 4;
+        } else {
+            equalsButtonClick();
+                plus.classList.add('highlight');
+                hiddenNumber = parseInt(displayNumber);
+                numberEntryArray = [];
+                calculationOption = 4;
+        }
     }
 }
 
